@@ -10,6 +10,9 @@ public class LRU implements ReplacementAlgorithm {
         for (int i = pageArray.length - 1; i >= 0; i--) {
             if (pageArray[i].used) {
                 if (pageArray[i].processID == processID) {
+                    if (pageArray[i].pageID == pageID) {
+                        return i;
+                    }
                     isNewProcess = false;
                 }
                 if (leastRecentReferenceTime > pageArray[i].lastReferenceTime) {
