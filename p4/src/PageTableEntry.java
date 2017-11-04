@@ -1,4 +1,4 @@
-class Page {
+class PageTableEntry {
     boolean used;
     int processID;
     int pageID;

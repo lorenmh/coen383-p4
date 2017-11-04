@@ -1,23 +1,23 @@
 public class LRU implements ReplacementAlgorithm {
     @Override
-    public int getNewFrame(Page[] pageArray, int processID, int pageID) {
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID) {
         boolean isNewProcess = true;
         int leastRecentReferenceTime = Integer.MIN_VALUE;
         int leastRecentReferenceIndex = -1;
         int freePageCount = 0;
         int firstFreePageIndex = -1;
 
-        for (int i = pageArray.length - 1; i >= 0; i--) {
-            if (pageArray[i].used) {
-                if (pageArray[i].processID == processID) {
-                    if (pageArray[i].pageID == pageID) {
+        for (int i = pageTableEntriesArray.length - 1; i >= 0; i--) {
+            if (pageTableEntriesArray[i].used) {
+                if (pageTableEntriesArray[i].processID == processID) {
+                    if (pageTableEntriesArray[i].pageID == pageID) {
                         return i;
                     }
                     isNewProcess = false;
                 }
-                if (leastRecentReferenceTime > pageArray[i].lastReferenceTime) {
+                if (leastRecentReferenceTime > pageTableEntriesArray[i].lastReferenceTime) {
                     leastRecentReferenceIndex = i;
-                    leastRecentReferenceTime = pageArray[i].lastReferenceTime;
+                    leastRecentReferenceTime = pageTableEntriesArray[i].lastReferenceTime;
                 }
             }else {
                 freePageCount += 1;
@@ -32,7 +32,11 @@ public class LRU implements ReplacementAlgorithm {
                 return -1;
             }
         }else {
-            return leastRecentReferenceIndex;
+            if (freePageCount > 0) {
+                return firstFreePageIndex;
+            }else {
+                return leastRecentReferenceIndex;
+            }
         }
     }
 }

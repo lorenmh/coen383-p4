@@ -1,3 +1,3 @@
 public interface ReplacementAlgorithm {
-    int getNewFrame(Page[] pageArray, int processID, int pageID);
+    int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID);
 }
