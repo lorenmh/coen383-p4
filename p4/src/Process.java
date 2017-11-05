@@ -15,7 +15,13 @@ public class Process {
         this.totalRunTime = totalRunTime;
     }
 
+    @Override
+    public String toString() {
+        return String.format("{id: %d, np: %d, trt: %d}", this.id, this.numPages, this.totalRunTime);
+    }
+
     public static Process ProcessFactory() {
         // create a random process, id from counter
+        return null;
     }
 }

@@ -17,4 +17,12 @@ public class PageTable {
         return pageReplacement.getNewFrame(entries, processID, pageID);
     }
 
+    public void print() {
+        System.out.println("[");
+        for (PageTableEntry entry : this.entries) {
+            System.out.println("\t" + entry.toString());
+        }
+        System.out.println("]");
+    }
+
 }
