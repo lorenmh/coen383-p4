@@ -4,6 +4,7 @@ class PageTableEntry {
     int pageID;
 //    int frameID;
     int lastReferenceTime;
+    int frequency;
 
     public String toString() {
         return String.format(
