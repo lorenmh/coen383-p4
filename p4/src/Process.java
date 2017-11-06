@@ -50,7 +50,7 @@ public class Process {
     @Override
     public String toString() {
         return String.format(
-                "{id: %d, at: %d, np: %d, trt: %d}", this.id, this.arrivalTime, this.numPages, this.totalRunTime
+                "{id: %s, at: %d, np: %d, trt: %d}", this.id, this.arrivalTime, this.numPages, this.totalRunTime
         );
     }
 
