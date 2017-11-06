@@ -5,16 +5,21 @@ import java.util.Random;
  */
 public class Process {
     public static int counter = 0;
+    public final static String achars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    public final static String nchars = "123456789";
+    public final static int[] pageSizes = {5,11,17,31};
 
     String id;
     int numPages;
     int totalRunTime;
     int lastUsedPage; // for determining locality of reference
+    int arrivalTime;
 
-    public Process(String id, int numPages, int totalRunTime) {
+    public Process(String id, int numPages, int totalRunTime, int arrivalTime) {
         this.id = id;
         this.numPages = numPages;
         this.totalRunTime = totalRunTime;
+        this.arrivalTime = arrivalTime;
         this.lastUsedPage = 0;
     }
 
@@ -38,13 +43,26 @@ public class Process {
         return lastUsedPage;
     }
 
+    public static String intToStringID(int id) {
+        return "" + achars.charAt(id % achars.length()) + nchars.charAt(id / achars.length());
+    }
+
     @Override
     public String toString() {
         return String.format("{id: %d, np: %d, trt: %d}", this.id, this.numPages, this.totalRunTime);
     }
 
-    public static Process ProcessFactory() {
-        // create a random process, id from counter
-        return null;
+    public static Process createRandomProcess() {
+        Random random = new Random();
+        int randomNumPages = pageSizes[random.nextInt(pageSizes.length)];
+        int randomRunTime = random.nextInt(5) + 1;
+        int randomArrivalTime = random.nextInt(60);
+
+        return new Process(
+                Process.intToStringID(counter++), // id
+                randomNumPages,
+                randomRunTime,
+                randomArrivalTime
+        );
     }
 }
