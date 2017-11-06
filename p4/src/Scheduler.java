@@ -21,7 +21,7 @@ public class Scheduler {
     public LinkedList<Process> completedQueue;
 
     public static LinkedList<Process> createRandomArrivalQueue() {
-        LinkedList<Process> arrivalQueue = new LinkedList<Process>;
+        LinkedList<Process> arrivalQueue = new LinkedList<Process>();
         for (int i = 0; i < NUM_PROCS; i++) {
             arrivalQueue.add(Process.createRandomProcess());
         }
