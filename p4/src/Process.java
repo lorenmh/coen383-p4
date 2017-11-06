@@ -12,6 +12,7 @@ public class Process {
     String id;
     int numPages;
     int totalRunTime;
+    int remainingRunTime;
     int lastUsedPage; // for determining locality of reference
     int arrivalTime;
 
@@ -20,6 +21,7 @@ public class Process {
         this.arrivalTime = arrivalTime;
         this.numPages = numPages;
         this.totalRunTime = totalRunTime;
+        this.remainingRunTime = totalRunTime;
         this.lastUsedPage = 0;
     }
 
@@ -50,7 +52,8 @@ public class Process {
     @Override
     public String toString() {
         return String.format(
-                "{id: %s, at: %d, np: %d, trt: %d}", this.id, this.arrivalTime, this.numPages, this.totalRunTime
+                "{id: %s, at: %d, np: %d, trt: %d, rrt: %d}",
+                this.id, this.arrivalTime, this.numPages, this.totalRunTime, this.remainingRunTime
         );
     }
 
