@@ -15,11 +15,11 @@ public class Process {
     int lastUsedPage; // for determining locality of reference
     int arrivalTime;
 
-    public Process(String id, int numPages, int totalRunTime, int arrivalTime) {
+    public Process(String id, int arrivalTime, int numPages, int totalRunTime) {
         this.id = id;
+        this.arrivalTime = arrivalTime;
         this.numPages = numPages;
         this.totalRunTime = totalRunTime;
-        this.arrivalTime = arrivalTime;
         this.lastUsedPage = 0;
     }
 
@@ -49,7 +49,9 @@ public class Process {
 
     @Override
     public String toString() {
-        return String.format("{id: %d, np: %d, trt: %d}", this.id, this.numPages, this.totalRunTime);
+        return String.format(
+                "{id: %d, at: %d, np: %d, trt: %d}", this.id, this.arrivalTime, this.numPages, this.totalRunTime
+        );
     }
 
     public static Process createRandomProcess() {
@@ -60,9 +62,9 @@ public class Process {
 
         return new Process(
                 Process.intToStringID(counter++), // id
+                randomArrivalTime,
                 randomNumPages,
-                randomRunTime,
-                randomArrivalTime
+                randomRunTime
         );
     }
 }
