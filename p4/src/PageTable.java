@@ -13,6 +13,15 @@ public class PageTable {
             page.used = false;
         }
     }
+
+
+    public boolean pageExistsInTable(int processID, int pageID) {
+        for (PageTableEntry entry : entries) {
+            if (entry.processID == processID && entry.pageID == pageID) return true;
+        }
+        return false;
+    }
+
     public int getFrame(int processID, int pageID) {
         return pageReplacement.getNewFrame(entries, processID, pageID);
     }
