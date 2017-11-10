@@ -14,6 +14,19 @@ public class PageTable {
         }
     }
 
+    public int numFreeFrames() {
+        int numFree = 0;
+
+        for (PageTableEntry entry : entries) {
+           if (entry == null) {
+               numFree++;
+               continue;
+           }
+           if (!entry.used) numFree++;
+        }
+
+        return numFree;
+    }
 
     public boolean pageExistsInTable(int processID, int pageID) {
         for (PageTableEntry entry : entries) {
