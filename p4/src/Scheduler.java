@@ -98,6 +98,11 @@ public class Scheduler {
                 runningQueue.addLast(runningProcess);
             }
         }
+        double hitMissRatio = (double)pageTable.hit / (double)pageTable.miss;
+        System.out.printf("hit miss ratio is %.3f\n", hitMissRatio);
+        waitingQueue = new LinkedList<Process>();
+        runningQueue = new LinkedList<Process>();
+        completedQueue = new LinkedList<Process>();
     }
 
 }
