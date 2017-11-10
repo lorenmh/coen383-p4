@@ -22,7 +22,16 @@ public class PageTable {
         return false;
     }
 
-    public int getFrame(int processID, int pageID) {
+    public void lockFrameFor(int processID, int pageID) {
+        for (PageTableEntry entry : entries) {
+            if (entry.processID == processID && entry.pageID == pageID) {
+                entry.lockOnThisRound = true;
+            }
+        }
+    }
+
+
+    public int getFrameFor(int processID, int pageID) {
         return pageReplacement.getNewFrame(entries, processID, pageID);
     }
 
