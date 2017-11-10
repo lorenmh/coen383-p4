@@ -36,10 +36,26 @@ public class Process {
             lastUsedPage = random.nextInt(numPages);
         }
 
+//        if (lastUsedPage < 0) {
+//            lastUsedPage = numPages + lastUsedPage;
+//        } else if (lastUsedPage > numPages) {
+//            lastUsedPage = lastUsedPage - numPages;
+//        }
+        // he said its not a circle
+
+        rnum = random.nextDouble();
         if (lastUsedPage < 0) {
-            lastUsedPage = numPages + lastUsedPage;
-        } else if (lastUsedPage > numPages) {
-            lastUsedPage = lastUsedPage - numPages;
+            if (rnum < 0.5) {
+                lastUsedPage = 0;
+            }else {
+                lastUsedPage = 1;
+            }
+        }else if (lastUsedPage >= numPages) {
+            if (rnum < 0.5) {
+                lastUsedPage = numPages - 1;
+            }else {
+                lastUsedPage = numPages - 2;
+            }
         }
 
         return lastUsedPage;
@@ -60,7 +76,7 @@ public class Process {
     public static Process createRandomProcess() {
         Random random = new Random();
         int randomNumPages = pageSizes[random.nextInt(pageSizes.length)];
-        int randomRunTime = random.nextInt(5) + 1;
+        int randomRunTime = 10 * (random.nextInt(5) + 1);
         int randomArrivalTime = random.nextInt(60);
 
         return new Process(

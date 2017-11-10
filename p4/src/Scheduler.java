@@ -49,4 +49,14 @@ public class Scheduler {
         completedQueue = new LinkedList<Process>();
     }
 
+    public void runSchedulerOn(PageTable pageTable) {
+        int time = 0;   // 1 unit stands for 100ms
+        while (!(arrivalQueue.isEmpty() && waitingQueue.isEmpty() && runningQueue.isEmpty()) {
+            if (!runningQueue.isEmpty()) {
+                
+            }
+        }
+
+    }
+
 }
