@@ -50,16 +50,18 @@ public class Scheduler {
     }
 
     public void runSchedulerOn(PageTable pageTable) {
-        int time = 0;   // 1 unit stands for 100ms
-        while (!(arrivalQueue.isEmpty() && waitingQueue.isEmpty() && runningQueue.isEmpty()) {
-            for (Process process : runningQueue) {
-
-
+        for (int quantum = 0; quantum < 1000; quantum++) {
+            // get arriving processes, put them in waiting queue
+            for (Process process : arrivalQueue) {
+                if (process.arrivalTime * 10 > quantum) break;
+                waitingQueue.add(process);
             }
 
+           // check to see if we can schedule a new process (check to see if there are 4 pages free)
+           // if we can schedule a new process, then add it to the running queue
 
+           // for every process in running queue, run it. If it is done then move it to the completedQueue
         }
-
     }
 
 }
