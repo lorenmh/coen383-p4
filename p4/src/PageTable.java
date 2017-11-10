@@ -57,7 +57,7 @@ public class PageTable {
         referenceCount += 1;
         double currentTime = (double)time / 10.0;
         if (referenceCount>=200 && referenceCount < 300) {
-            System.out.printf("At time: %.1f, process %d, page %d gets referenced, ", currentTime, processID, pageID);
+            System.out.printf("At time: %.1f, process %s, page %d gets referenced, ", currentTime, Process.intToStringID(processID), pageID);
         }
         if (newFrameNumber == -1) {
             if (referenceCount>=200 && referenceCount < 300) {
@@ -79,7 +79,7 @@ public class PageTable {
 //            miss += 1;
         }else {
             if (referenceCount>=200 && referenceCount < 300) {
-                System.out.printf("process %d, page %d gets swapped out, ", entries[newFrameNumber].processID, entries[newFrameNumber].pageID);
+                System.out.printf("process %s, page %d gets swapped out, ", Process.intToStringID(entries[newFrameNumber].processID), entries[newFrameNumber].pageID);
             }
             entries[newFrameNumber].frequency = 1;
             miss += 1;
