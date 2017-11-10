@@ -6,11 +6,8 @@ class PageTableEntry {
     int lastReferenceTime;
     int frequency;
 
-    boolean lockOnThisRound;
-
     public PageTableEntry() {
         this.used = false;
-        this.lockOnThisRound = false;
     }
 
 

@@ -2,7 +2,7 @@
  * Created by loren on 10/30/17.
  */
 public class PageTable {
-    private PageTableEntry[] entries = new PageTableEntry[100];
+    private PageTableEntry[] entries;
     private ReplacementAlgorithm pageReplacement;
 
     public void setReplacementAlgorithm(ReplacementAlgorithm algorithm) {
@@ -13,6 +13,15 @@ public class PageTable {
             page.used = false;
         }
     }
+
+    public PageTable() {
+        this.entries = new PageTableEntry[100];
+        for (int i = 0; i < 100; i++) {
+            this.entries[i] = new PageTableEntry();
+        }
+    }
+
+
 
     public int numFreeFrames() {
         int numFree = 0;
@@ -40,14 +49,6 @@ public class PageTable {
             if (entry.processID == processID && entry.pageID == pageID) return true;
         }
         return false;
-    }
-
-    public void lockFrameFor(int processID, int pageID) {
-        for (PageTableEntry entry : entries) {
-            if (entry.processID == processID && entry.pageID == pageID) {
-                entry.lockOnThisRound = true;
-            }
-        }
     }
 
 
