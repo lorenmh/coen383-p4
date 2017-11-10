@@ -1,7 +1,6 @@
 public class LRU implements ReplacementAlgorithm {
     @Override
-    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID) {
-        boolean isNewProcess = true;
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID, boolean isNewProcess) {
         int leastRecentReferenceTime = Integer.MAX_VALUE;
         int leastRecentReferenceIndex = -1;
         int freePageCount = 0;
@@ -13,7 +12,6 @@ public class LRU implements ReplacementAlgorithm {
                     if (pageTableEntriesArray[i].pageID == pageID) {
                         return i;
                     }
-                    isNewProcess = false;
                 }
                 if (leastRecentReferenceTime > pageTableEntriesArray[i].lastReferenceTime) {
                     leastRecentReferenceIndex = i;

@@ -3,12 +3,11 @@
  */
 public class LFU implements ReplacementAlgorithm{
     @Override
-    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID){
-        boolean isNewProcess = true;
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID, boolean isNewProcess){
         int freePageCount = 0;
         int firstFreePageIndex = -1;
 
-        int leastFrequency = Integer.MIN_VALUE;
+        int leastFrequency = Integer.MAX_VALUE;
         int leastFrequencyIndex = -1;
 
         for (int i = pageTableEntriesArray.length - 1; i >= 0; i--) {
@@ -18,7 +17,6 @@ public class LFU implements ReplacementAlgorithm{
                         pageTableEntriesArray[i].frequency += 1;            //Increment counter after page hit
                         return i;
                     }
-                    isNewProcess = false;
                 }
                 if (leastFrequency > pageTableEntriesArray[i].frequency) {
                     leastFrequencyIndex = i;

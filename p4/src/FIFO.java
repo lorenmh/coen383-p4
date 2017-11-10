@@ -3,8 +3,7 @@
  */
 public class FIFO implements ReplacementAlgorithm{
     @Override
-    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID){
-        boolean isNewProcess = true;
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID, boolean isNewProcess){
         int freePageCount = 0;
         int firstFreePageIndex = -1;
 
@@ -16,9 +15,7 @@ public class FIFO implements ReplacementAlgorithm{
                     if (pageTableEntriesArray[i].pageID == pageID) {
                         return i;
                     }
-                    isNewProcess = false;
                 }
-
             }else {
                 freePageCount += 1;
                 firstFreePageIndex = i;

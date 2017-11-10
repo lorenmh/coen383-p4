@@ -73,7 +73,7 @@ public class Scheduler {
                 Process newProcess = waitingQueue.removeFirst();
                 System.out.printf("At time: %.1f, process %s arrives\n", (double) quantum / 10.0, newProcess.sid);
                 newProcess.lastUsedPage = -1;
-                int frameNum = pageTable.getFrameFor(newProcess.id, 0, quantum);
+                int frameNum = pageTable.getFrameFor(newProcess.id, 0, quantum, true);
                 runningQueue.addLast(newProcess);
             }
 
@@ -83,7 +83,7 @@ public class Scheduler {
             Process runningProcess = runningQueue.removeFirst();
 
             int pageID = runningProcess.nextPageID();
-            pageTable.getFrameFor(runningProcess.id, pageID, quantum);
+            pageTable.getFrameFor(runningProcess.id, pageID, quantum, false);
 
             runningProcess.remainingRunTime -= 1;
 
@@ -97,6 +97,14 @@ public class Scheduler {
 
             pageTable.print();
         }
+        double hitMissRatio = (double)pageTable.hit / (double)pageTable.miss;
+        for (Process process: arrivalQueue) {
+            process.remainingRunTime = process.totalRunTime;
+            process.lastUsedPage = -1;
+        }
+        waitingQueue = new LinkedList<Process>();
+        runningQueue = new LinkedList<Process>();
+        completedQueue = new LinkedList<Process>();
     }
 
 }

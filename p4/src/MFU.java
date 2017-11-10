@@ -3,8 +3,7 @@
  */
 public class MFU implements ReplacementAlgorithm{
     @Override
-    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID){
-        boolean isNewProcess = true;
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID, boolean isNewProcess){
         int freePageCount = 0;
         int firstFreePageIndex = -1;
 
@@ -18,7 +17,6 @@ public class MFU implements ReplacementAlgorithm{
                         pageTableEntriesArray[i].frequency += 1;            //Increment counter after page hit
                         return i;
                     }
-                    isNewProcess = false;
                 }
                 if (mostFrequency < pageTableEntriesArray[i].frequency) {
                     mostFrequencyIndex = i;

@@ -4,8 +4,7 @@ public class RandomPick implements ReplacementAlgorithm {
     Random rand = new Random();
 
     @Override
-    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID) {
-        boolean isNewProcess = true;
+    public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID, boolean isNewProcess) {
         int freeFrameCount = 0;
         int firstFreeFrameIndex = -1;
         for (int i = pageTableEntriesArray.length - 1; i >= 0; i--) {
@@ -14,7 +13,6 @@ public class RandomPick implements ReplacementAlgorithm {
                     if (pageTableEntriesArray[i].pageID == pageID) {
                         return i;
                     }
-                    isNewProcess = false;
                 }
             }else {
                 freeFrameCount += 1;
