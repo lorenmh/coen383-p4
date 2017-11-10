@@ -21,8 +21,6 @@ public class PageTable {
         }
     }
 
-
-
     public int numFreeFrames() {
         int numFree = 0;
 
@@ -50,7 +48,7 @@ public class PageTable {
     public int getFrameFor(int processID, int pageID, int time) {
         int newFrameNumber = pageReplacement.getNewFrame(entries, processID, pageID);
         double currentTime = (double)time / 10.0;
-        System.out.printf("At time: %.1f, process %d, page %d gets referenced, ",currentTime, processID, pageID);
+        System.out.printf("At time: %.1f, process %s, page %d gets referenced, ",currentTime, Process.intToStringID(processID), pageID);
         if (newFrameNumber == -1) {
             System.out.printf("not enough free frames, page request rejected.\n");
             return -1;
@@ -62,7 +60,7 @@ public class PageTable {
             System.out.printf("assigned a free memory frame, ");
             entries[newFrameNumber].frequency = 1;
         }else {
-            System.out.printf("process %d, page %d gets swapped out, ", entries[newFrameNumber].processID, entries[newFrameNumber].pageID);
+            System.out.printf("process %s, page %d gets swapped out, ", Process.intToStringID(entries[newFrameNumber].processID), entries[newFrameNumber].pageID);
             entries[newFrameNumber].frequency = 1;
         }
         System.out.printf("memory frame number is %d.\n", newFrameNumber);
@@ -74,9 +72,13 @@ public class PageTable {
     }
 
     public void print() {
-        System.out.println("[");
+        System.out.print("[ ");
         for (PageTableEntry entry : this.entries) {
-            System.out.println("\t" + entry.toString());
+            if (entry == null || entry.used == false) {
+                System.out.print("-- ");
+            } else {
+                System.out.print(Process.intToStringID(entry.processID) + " ");
+            }
         }
         System.out.println("]");
     }

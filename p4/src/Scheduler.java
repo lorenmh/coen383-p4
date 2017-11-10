@@ -71,9 +71,9 @@ public class Scheduler {
             while (waitingQueue.size() > 0 && pageTable.numFreeFrames() >= 4) {
                 // allocate 4 frames for the next process, add it to the running queue
                 Process newProcess = waitingQueue.removeFirst();
+                System.out.printf("At time: %.1f, process %s arrives\n", (double) quantum / 10.0, newProcess.sid);
                 newProcess.lastUsedPage = -1;
                 int frameNum = pageTable.getFrameFor(newProcess.id, 0, quantum);
-                System.out.printf("At time: %.1f, process %d arrives\n", (double) quantum / 10.0, newProcess.id);
                 runningQueue.addLast(newProcess);
             }
 
@@ -83,20 +83,19 @@ public class Scheduler {
             Process runningProcess = runningQueue.removeFirst();
 
             int pageID = runningProcess.nextPageID();
-//           if (!pageTable.pageExistsInTable(runningProcess.id, pageID)) {
-//              // get a new frame
-//           }
             pageTable.getFrameFor(runningProcess.id, pageID, quantum);
 
             runningProcess.remainingRunTime -= 1;
 
             if (runningProcess.remainingRunTime <= 0) {
                 pageTable.freeFramesForProcess(runningProcess);
-                System.out.printf("At time: %.1f, process %d finished\n", (double)(quantum + 1) / 10.0, runningProcess.id);
+                System.out.printf("At time: %.1f, process %s finished\n", (double)(quantum + 1) / 10.0, runningProcess.sid);
                 completedQueue.add(runningProcess);
             } else {
                 runningQueue.addLast(runningProcess);
             }
+
+            pageTable.print();
         }
     }
 
