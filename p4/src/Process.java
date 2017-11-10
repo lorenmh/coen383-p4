@@ -9,15 +9,17 @@ public class Process {
     public final static String nchars = "123456789";
     public final static int[] pageSizes = {5,11,17,31};
 
-    String id;
+    int id;
+    String sid;
     int numPages;
     int totalRunTime;
     int remainingRunTime;
     int lastUsedPage; // for determining locality of reference
     int arrivalTime;
 
-    public Process(String id, int arrivalTime, int numPages, int totalRunTime) {
+    public Process(int id, String sid, int arrivalTime, int numPages, int totalRunTime) {
         this.id = id;
+        this.sid = sid;
         this.arrivalTime = arrivalTime;
         this.numPages = numPages;
         this.totalRunTime = totalRunTime;
@@ -79,8 +81,11 @@ public class Process {
         int randomRunTime = 10 * (random.nextInt(5) + 1);
         int randomArrivalTime = random.nextInt(60);
 
+        int id = counter++;
+
         return new Process(
-                Process.intToStringID(counter++), // id
+                id,
+                Process.intToStringID(id), // id
                 randomArrivalTime,
                 randomNumPages,
                 randomRunTime

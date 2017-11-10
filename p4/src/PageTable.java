@@ -28,6 +28,13 @@ public class PageTable {
         return numFree;
     }
 
+    public void freeFramesForProcess(Process process) {
+        for (PageTableEntry entry : entries) {
+            if (entry == null) continue;
+            if (entry.processID == process.id) entry.used = false;
+        }
+    }
+
     public boolean pageExistsInTable(int processID, int pageID) {
         for (PageTableEntry entry : entries) {
             if (entry.processID == processID && entry.pageID == pageID) return true;
