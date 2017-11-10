@@ -95,7 +95,7 @@ public class Scheduler {
                 runningQueue.addLast(runningProcess);
             }
 
-            pageTable.print();
+            //pageTable.print();
         }
         double hitMissRatio = (double)pageTable.hit / (double)pageTable.miss;
         for (Process process: arrivalQueue) {
