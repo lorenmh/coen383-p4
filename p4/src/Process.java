@@ -79,7 +79,7 @@ public class Process {
         Random random = new Random();
         int randomNumPages = pageSizes[random.nextInt(pageSizes.length)];
         int randomRunTime = 10 * (random.nextInt(5) + 1);
-        int randomArrivalTime = random.nextInt(60);
+        int randomArrivalTime = random.nextInt(600);
 
         int id = counter++;
 

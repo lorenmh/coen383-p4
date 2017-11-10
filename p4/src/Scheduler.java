@@ -59,14 +59,34 @@ public class Scheduler {
         for (int quantum = 0; quantum < 1000; quantum++) {
             // get arriving processes, put them in waiting queue
             for (Process process : arrivalQueue) {
-                if (process.arrivalTime * 10 > quantum) break;
+                // process arrival time is 0-100, but quantum is in 100ms chunks not seconds, so convert to 100ms
+                if (process.arrivalTime > quantum) break;
                 waitingQueue.add(process);
             }
 
            // check to see if we can schedule a new process (check to see if there are 4 pages free)
            // if we can schedule a new process, then add it to the running queue
+           while (waitingQueue.size() > 0 && pageTable.numFreeFrames() >= 4) {
+               // allocate 4 frames for the next process, add it to the running queue
+           }
 
-           // for every process in running queue, run it. If it is done then move it to the completedQueue
+           // run the next process in the running queue
+           if (runningQueue.size() == 0) continue; // nothing to do, so lets go to the next quantum
+
+           Process runningProcess = runningQueue.removeFirst();
+
+           int pageID = runningProcess.nextPageID();
+           if (!pageTable.pageExistsInTable(runningProcess.id, pageID)) {
+              // get a new frame
+           }
+
+           runningProcess.remainingRunTime -= 1;
+
+           if (runningProcess.remainingRunTime <= 0) {
+               completedQueue.add(runningProcess);
+           } else {
+               runningQueue.add(runningProcess);
+           }
         }
     }
 
