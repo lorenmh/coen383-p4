@@ -49,6 +49,12 @@ public class Scheduler {
         completedQueue = new LinkedList<Process>();
     }
 
+    public Scheduler(LinkedList<Process> arrivalQueue) {
+        this.arrivalQueue = arrivalQueue;
+        waitingQueue = new LinkedList<Process>();
+        runningQueue = new LinkedList<Process>();
+        completedQueue = new LinkedList<Process>();
+    }
     public void runSchedulerOn(PageTable pageTable) {
         for (int quantum = 0; quantum < 1000; quantum++) {
             // get arriving processes, put them in waiting queue
