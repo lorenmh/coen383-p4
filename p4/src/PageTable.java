@@ -51,6 +51,10 @@ public class PageTable {
         int newFrameNumber = pageReplacement.getNewFrame(entries, processID, pageID);
         double currentTime = (double)time / 10.0;
         System.out.printf("At time: %.1f, process %d, page %d gets referenced, ",currentTime, processID, pageID);
+        if (newFrameNumber == -1) {
+            System.out.printf("not enough free frames, page request rejected.\n");
+            return -1;
+        }
         if (entries[newFrameNumber].processID == processID && entries[newFrameNumber].pageID == pageID) {
             System.out.printf("page already in memory, ");
             entries[newFrameNumber].frequency += 1;

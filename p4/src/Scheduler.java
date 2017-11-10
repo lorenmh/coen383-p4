@@ -55,8 +55,9 @@ public class Scheduler {
         runningQueue = new LinkedList<Process>();
         completedQueue = new LinkedList<Process>();
     }
+
     public void runSchedulerOn(PageTable pageTable) {
-        for (int quantum = 0; quantum < 600; quantum++) {
+        for (int quantum = 0; quantum < 1000; quantum++) {
             // get arriving processes, put them in waiting queue
             for (Process process : arrivalQueue) {
                 // process arrival time is 0-100, but quantum is in 100ms chunks not seconds, so convert to 100ms
@@ -65,34 +66,37 @@ public class Scheduler {
                 }
             }
 
-           // check to see if we can schedule a new process (check to see if there are 4 pages free)
-           // if we can schedule a new process, then add it to the running queue
-           while (waitingQueue.size() > 0 && pageTable.numFreeFrames() >= 4) {
-               // allocate 4 frames for the next process, add it to the running queue
-               Process newProcess = waitingQueue.removeFirst();
-               newProcess.lastUsedPage = -1;
-               int frameNum = pageTable.getFrameFor(newProcess.id, 0, quantum);
-               System.out.printf("At time: %.1f, Process No.%d arrives\n", (double)quantum / 10.0, newProcess.id);
-               runningQueue.addLast(newProcess);
-           }
+            // check to see if we can schedule a new process (check to see if there are 4 pages free)
+            // if we can schedule a new process, then add it to the running queue
+            while (waitingQueue.size() > 0 && pageTable.numFreeFrames() >= 4) {
+                // allocate 4 frames for the next process, add it to the running queue
+                Process newProcess = waitingQueue.removeFirst();
+                newProcess.lastUsedPage = -1;
+                int frameNum = pageTable.getFrameFor(newProcess.id, 0, quantum);
+                System.out.printf("At time: %.1f, process %d arrives\n", (double) quantum / 10.0, newProcess.id);
+                runningQueue.addLast(newProcess);
+            }
 
-           // run the next process in the running queue
-           if (runningQueue.size() == 0) continue; // nothing to do, so lets go to the next quantum
+            // run the next process in the running queue
+            if (runningQueue.size() == 0) continue; // nothing to do, so lets go to the next quantum
 
-           Process runningProcess = runningQueue.removeFirst();
+            Process runningProcess = runningQueue.removeFirst();
 
-           int pageID = runningProcess.nextPageID();
-           if (!pageTable.pageExistsInTable(runningProcess.id, pageID)) {
-              // get a new frame
-           }
+            int pageID = runningProcess.nextPageID();
+//           if (!pageTable.pageExistsInTable(runningProcess.id, pageID)) {
+//              // get a new frame
+//           }
+            pageTable.getFrameFor(runningProcess.id, pageID, quantum);
 
-           runningProcess.remainingRunTime -= 1;
+            runningProcess.remainingRunTime -= 1;
 
-           if (runningProcess.remainingRunTime <= 0) {
-               completedQueue.add(runningProcess);
-           } else {
-               runningQueue.addLast(runningProcess);
-           }
+            if (runningProcess.remainingRunTime <= 0) {
+                pageTable.freeFramesForProcess(runningProcess);
+                System.out.printf("At time: %.1f, process %d finished\n", (double)(quantum + 1) / 10.0, runningProcess.id);
+                completedQueue.add(runningProcess);
+            } else {
+                runningQueue.addLast(runningProcess);
+            }
         }
     }
 

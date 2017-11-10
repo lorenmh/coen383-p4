@@ -2,7 +2,7 @@ public class LRU implements ReplacementAlgorithm {
     @Override
     public int getNewFrame(PageTableEntry[] pageTableEntriesArray, int processID, int pageID) {
         boolean isNewProcess = true;
-        int leastRecentReferenceTime = Integer.MIN_VALUE;
+        int leastRecentReferenceTime = Integer.MAX_VALUE;
         int leastRecentReferenceIndex = -1;
         int freePageCount = 0;
         int firstFreePageIndex = -1;
