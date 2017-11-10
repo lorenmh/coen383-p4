@@ -28,6 +28,10 @@ public class Process {
     }
 
     public int nextPageID() {
+        if (lastUsedPage == -1) {
+            lastUsedPage = 0;
+            return 0;
+        }
         Random random = new Random();
         double rnum = random.nextDouble();
         if (rnum < .23333333) {

@@ -8,6 +8,10 @@ class PageTableEntry {
 
     public PageTableEntry() {
         this.used = false;
+        processID = -1;
+        pageID = -1;
+        lastReferenceTime = -1;
+        frequency = 0;
     }
 
 
