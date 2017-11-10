@@ -18,6 +18,7 @@ public class PageTable {
         }
         hit = 0;
         miss = 0;
+        referenceCount = 0;
     }
 
     public PageTable() {
@@ -53,8 +54,8 @@ public class PageTable {
     }
 
 
-    public int getFrameFor(int processID, int pageID, int time) {
-        int newFrameNumber = pageReplacement.getNewFrame(entries, processID, pageID);
+    public int getFrameFor(int processID, int pageID, int time, boolean isNewProcess) {
+        int newFrameNumber = pageReplacement.getNewFrame(entries, processID, pageID, isNewProcess);
         referenceCount += 1;
         double currentTime = (double)time / 10.0;
         if (referenceCount>=200 && referenceCount < 300) {
